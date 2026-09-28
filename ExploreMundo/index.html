@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExploreMundo | Guia de Viagens & Destinos Incríveis</title>
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal: '#14b8a6',
+              dark: '#090d16',
+              card: '#111827',
+              accent: '#38bdf8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- BIBLIOTECA 1: Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- BIBLIOTECA 2: Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- BIBLIOTECA 3: AOS (Animate On Scroll) CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <!-- Estilos Customizados do Projeto -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-teal-500 selection:text-slate-950">
+
+  <!-- =========================================================================
+       Barra de Navegação Superior
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logotipo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-teal-500 to-cyan-400 flex items-center justify-center text-slate-950 text-xl font-black shadow-lg shadow-teal-500/25 group-hover:scale-105 transition">
+          <i class="fa-solid fa-earth-americas"></i>
+        </div>
+        <div>
+          <span class="text-2xl font-black tracking-tight text-white flex items-center gap-1 brand-font">
+            Explore<span class="text-teal-400">Mundo</span>
+          </span>
+          <span class="text-[10px] text-teal-300/80 block uppercase tracking-widest font-semibold">Projeto Bibliotecas JS</span>
+        </div>
+      </a>
+
+      <!-- Menu Principal -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+        <a href="#inicio" class="hover:text-teal-400 transition">Início</a>
+        <a href="#destinos" class="hover:text-teal-400 transition flex items-center gap-1.5">
+          <span>Destinos</span>
+          <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1.5 py-0.5 rounded font-mono">Swiper</span>
+        </a>
+        <a href="#secao-mapa" class="hover:text-teal-400 transition flex items-center gap-1.5">
+          <span>Mapa</span>
+          <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono">Leaflet</span>
+        </a>
+        <a href="#pacotes" class="hover:text-teal-400 transition flex items-center gap-1.5">
+          <span>Pacotes</span>
+          <span class="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded font-mono">AOS</span>
+        </a>
+        <a href="#bibliotecas" class="hover:text-teal-400 transition">Documentação JS</a>
+      </nav>
+
+      <!-- Botão para Slides da Apresentação -->
+      <div class="flex items-center gap-3">
+        <a href="slides.html" target="_blank" class="px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-teal-500/20 transition transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Slides da Apresentação</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Hero Section
+       ========================================================================= -->
+  <section id="inicio" class="relative pt-36 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <!-- Efeitos de iluminação de fundo -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-teal-500/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-1/3 -right-20 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Badge de Identificação da Atividade -->
+      <div data-aos="fade-down" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-teal-500/30 text-teal-300 text-xs font-semibold mb-6 shadow-md">
+        <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+        <span>Programação Web I • 3 Bibliotecas JavaScript Integradas</span>
+      </div>
+
+      <!-- Título Principal -->
+      <h1 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
+        Descubra o Mundo com a Potência do <span class="bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">JavaScript</span>
+      </h1>
+
+      <p data-aos="fade-up" data-aos-delay="200" class="mt-6 text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+        Uma experiência interativa com carrossel 3D (<strong class="text-teal-300">Swiper</strong>), mapeamento geográfico global (<strong class="text-cyan-300">Leaflet</strong>) e animações visuais fluidas (<strong class="text-purple-300">AOS</strong>).
+      </p>
+
+      <!-- Botões de Ação do Hero -->
+      <div data-aos="fade-up" data-aos-delay="300" class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="#destinos" class="px-7 py-3.5 bg-teal-500 hover:bg-teal-400 text-slate-950 rounded-xl font-black text-sm transition shadow-lg shadow-teal-500/25 flex items-center gap-2">
+          <i class="fa-solid fa-compass"></i>
+          <span>Explorar Destinos (Swiper)</span>
+        </a>
+        <a href="#secao-mapa" class="px-7 py-3.5 bg-slate-900 hover:bg-slate-800 border border-white/10 hover:border-teal-500/40 text-white rounded-xl font-bold text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-map-location-dot text-cyan-400"></i>
+          <span>Abrir Mapa Mundial (Leaflet)</span>
+        </a>
+        <button onclick="dispararConfetes()" class="px-5 py-3.5 bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-300 rounded-xl font-bold text-sm transition flex items-center gap-2" title="Testar biblioteca de confetes">
+          <span>🎉</span>
+          <span>Testar Confetes</span>
+        </button>
+      </div>
+
+      <!-- Métricas / Badges das Bibliotecas -->
+      <div data-aos="fade-up" data-aos-delay="400" class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="glass-card p-4 rounded-2xl text-left border-l-4 border-l-teal-500">
+          <span class="text-xs uppercase text-slate-400 font-bold tracking-wider">Biblioteca 1</span>
+          <p class="text-white font-black text-base mt-0.5">Swiper.js</p>
+          <span class="text-[11px] text-teal-400 font-medium">Carrossel Coverflow 3D</span>
+        </div>
+        <div class="glass-card p-4 rounded-2xl text-left border-l-4 border-l-cyan-500">
+          <span class="text-xs uppercase text-slate-400 font-bold tracking-wider">Biblioteca 2</span>
+          <p class="text-white font-black text-base mt-0.5">Leaflet.js</p>
+          <span class="text-[11px] text-cyan-400 font-medium">Mapas & Marcadores GPS</span>
+        </div>
+        <div class="glass-card p-4 rounded-2xl text-left border-l-4 border-l-purple-500">
+          <span class="text-xs uppercase text-slate-400 font-bold tracking-wider">Biblioteca 3</span>
+          <p class="text-white font-black text-base mt-0.5">AOS.js</p>
+          <span class="text-[11px] text-purple-400 font-medium">Animações ao Rolar</span>
+        </div>
+        <div class="glass-card p-4 rounded-2xl text-left border-l-4 border-l-amber-500">
+          <span class="text-xs uppercase text-slate-400 font-bold tracking-wider">Bônus</span>
+          <p class="text-white font-black text-base mt-0.5">canvas-confetti</p>
+          <span class="text-[11px] text-amber-400 font-medium">Feedback Comemorativo</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SEÇÃO 1: SWIPER.JS (Carrossel Interativo de Destinos)
+       ========================================================================= -->
+  <section id="destinos" class="py-20 bg-slate-900/60 relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div data-aos="fade-right">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-bold mb-3">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Biblioteca 1 em Ação: Swiper.js v11</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-black text-white brand-font">Destinos Mais Procurados do Planeta</h2>
+          <p class="text-slate-400 text-sm mt-2 max-w-xl">
+            Arraste os cards para os lados ou use os botões de navegação. Cada destino possui integração direta com o mapa interativo.
+          </p>
+        </div>
+        
+        <!-- Indicador de recurso do Swiper -->
+        <div data-aos="fade-left" class="mt-4 md:mt-0 flex items-center gap-3">
+          <div class="text-right hidden sm:block">
+            <span class="text-xs text-slate-400 font-mono">Efeito Ativo:</span>
+            <span class="text-xs font-bold text-teal-400 block font-mono">effect: 'coverflow'</span>
+          </div>
+          <div class="flex gap-2">
+            <button class="swiper-button-prev !relative !left-0 !top-0 !mt-0 !right-auto"></button>
+            <button class="swiper-button-next !relative !left-0 !top-0 !mt-0 !right-auto"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container do Swiper -->
+      <div data-aos="zoom-in" data-aos-duration="1000" class="swiper destinos-swiper">
+        <div class="swiper-wrapper" id="swiper-destinos-wrapper">
+          <!-- Os cards são gerados dinamicamente via JavaScript em main.js -->
+        </div>
+        <!-- Paginação -->
+        <div class="swiper-pagination"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SEÇÃO 2: LEAFLET.JS (Mapa Interativo Mundial)
+       ========================================================================= -->
+  <section id="secao-mapa" class="py-20 relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="text-center max-w-3xl mx-auto mb-10" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold mb-3">
+          <i class="fa-solid fa-map"></i>
+          <span>Biblioteca 2 em Ação: Leaflet.js v1.9</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white brand-font">Mapeamento Geográfico Interativo</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Navegue pelo globo, dê zoom e clique nos marcadores para descobrir pacotes turísticos completos com valores e fotos em tempo real.
+        </p>
+      </div>
+
+      <!-- Controles do Mapa: Modo de Visualização e Filtro por Região -->
+      <div data-aos="fade-up" data-aos-delay="100" class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 bg-slate-900/80 p-3.5 rounded-2xl border border-white/10">
+        
+        <!-- Alternador de Modos de Mapa (Satélite / Ruas) -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider mr-1 hidden sm:inline">Camada:</span>
+          <button onclick="alternarTipoMapa('hibrido')" data-tipo="hibrido" class="btn-tipo-mapa px-3.5 py-1.5 bg-cyan-500 text-slate-950 font-bold rounded-xl text-xs transition shadow flex items-center gap-1.5">
+            <span>🛰️</span>
+            <span>Satélite Híbrido</span>
+          </button>
+          <button onclick="alternarTipoMapa('satelite')" data-tipo="satelite" class="btn-tipo-mapa px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+            <span>🌍</span>
+            <span>Satélite Puro</span>
+          </button>
+          <button onclick="alternarTipoMapa('ruas')" data-tipo="ruas" class="btn-tipo-mapa px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
+            <span>🗺️</span>
+            <span>Mapa Urbano</span>
+          </button>
+        </div>
+
+        <!-- Filtros por Região Geográfica -->
+        <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider mr-1 hidden sm:inline">Região:</span>
+          <button onclick="filtrarRegiao('todas')" data-regiao="todas" class="btn-filtro px-3 py-1.5 bg-teal-500 text-slate-950 font-bold rounded-xl text-xs transition shadow">
+            🌍 Global
+          </button>
+          <button onclick="filtrarRegiao('americas')" data-regiao="americas" class="btn-filtro px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition">
+            🌎 Américas
+          </button>
+          <button onclick="filtrarRegiao('europa')" data-regiao="europa" class="btn-filtro px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition">
+            🌍 Europa
+          </button>
+          <button onclick="filtrarRegiao('asia')" data-regiao="asia" class="btn-filtro px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs transition">
+            🌏 Ásia
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Container do Mapa Leaflet -->
+      <div data-aos="zoom-in" data-aos-delay="200" class="p-2.5 rounded-3xl bg-slate-900 border border-white/10 shadow-2xl relative">
+        <div id="mapa-turismo"></div>
+
+        <!-- Legenda informativa flutuante no mapa -->
+        <div class="absolute bottom-6 left-6 z-[400] glass-card px-4 py-2.5 rounded-xl border border-white/10 hidden sm:flex items-center gap-3 shadow-lg">
+          <div class="w-3 h-3 rounded-full bg-teal-400 animate-pulse"></div>
+          <span class="text-xs text-slate-200 font-medium">Marcadores clicáveis com detalhes e reservas</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SEÇÃO 3: AOS.JS (Animate On Scroll - Pacotes Turísticos)
+       ========================================================================= -->
+  <section id="pacotes" class="py-20 bg-slate-900/40 relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho -->
+      <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold mb-3">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Biblioteca 3 em Ação: AOS (Animate On Scroll)</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white brand-font">Pacotes Completos & Experiências</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Note como os cards e informações abaixo surgem suavemente com efeitos calculados ao rolar a página.
+        </p>
+      </div>
+
+      <!-- Grid de Pacotes Turísticos com Animações AOS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 (AOS: fade-up com delay 100) -->
+        <div data-aos="fade-up" data-aos-delay="100" class="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&auto=format&fit=crop&q=80" alt="Paris Clássica" class="w-full h-48 object-cover">
+            <span class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-teal-400 text-xs font-black px-3 py-1 rounded-full border border-teal-500/30">
+              7 Dias / 6 Noites
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>França • Europa</span>
+                <span class="text-amber-400">★★★★★ 4.9</span>
+              </div>
+              <h3 class="text-xl font-black text-white mb-2">Roteiro Cultural em Paris</h3>
+              <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                Hospedagem central, ingressos sem fila para o Museu do Louvre e cruzeiro panorâmico com jantar pelo Rio Sena.
+              </p>
+              <ul class="text-xs text-slate-400 space-y-1.5 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Café da manhã gourmet incluso</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Guia fluente em português</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Seguro viagem internacional</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-slate-400 block font-bold uppercase">Preço Promocional</span>
+                <span class="text-white font-black text-xl">R$ 5.490</span>
+              </div>
+              <button onclick="abrirModalReserva('Roteiro Cultural em Paris', 'R$ 5.490')" class="px-4 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg shadow-teal-500/20">
+                Reservar Pacote
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 (AOS: fade-up com delay 250) -->
+        <div data-aos="fade-up" data-aos-delay="250" class="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between border-2 border-teal-500/40 relative">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-teal-500 text-slate-950 text-[10px] font-black uppercase px-3 py-0.5 rounded-b-lg tracking-widest">
+            Mais Vendido
+          </div>
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=600&auto=format&fit=crop&q=80" alt="Fernando de Noronha" class="w-full h-48 object-cover">
+            <span class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-teal-400 text-xs font-black px-3 py-1 rounded-full border border-teal-500/30">
+              5 Dias / 4 Noites
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>Brasil • Ilhas</span>
+                <span class="text-amber-400">★★★★★ 5.0</span>
+              </div>
+              <h3 class="text-xl font-black text-white mb-2">Paraíso em Fernando de Noronha</h3>
+              <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                Mergulho autônomo na Baía do Sancho, passeio de barco com golfinhos rotadores e taxas ambientais inclusas.
+              </p>
+              <ul class="text-xs text-slate-400 space-y-1.5 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Pousada de charme sustentável</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Ilha tour exclusivo de 4x4</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Transfer aeroporto ida e volta</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-slate-400 block font-bold uppercase">Preço Promocional</span>
+                <span class="text-teal-400 font-black text-xl">R$ 3.890</span>
+              </div>
+              <button onclick="abrirModalReserva('Paraíso em Fernando de Noronha', 'R$ 3.890')" class="px-4 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs rounded-xl transition shadow-lg shadow-teal-500/25">
+                Reservar Pacote
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 (AOS: fade-up com delay 400) -->
+        <div data-aos="fade-up" data-aos-delay="400" class="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600&auto=format&fit=crop&q=80" alt="Tóquio Futurista" class="w-full h-48 object-cover">
+            <span class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-teal-400 text-xs font-black px-3 py-1 rounded-full border border-teal-500/30">
+              10 Dias / 9 Noites
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>Japão • Ásia</span>
+                <span class="text-amber-400">★★★★★ 4.9</span>
+              </div>
+              <h3 class="text-xl font-black text-white mb-2">Tóquio & Monte Fuji</h3>
+              <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                Passe ilimitado de trem-bala Shinkansen, visita a Akihabara, templos milenares de Asakusa e termas Onsen tradicionais.
+              </p>
+              <ul class="text-xs text-slate-400 space-y-1.5 mb-6">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Japan Rail Pass 7 dias incluso</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Experiência culinária Kaiseki</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-teal-400"></i> Suporte e chip eSIM 5G 20GB</li>
+              </ul>
+            </div>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-slate-400 block font-bold uppercase">Preço Promocional</span>
+                <span class="text-white font-black text-xl">R$ 6.950</span>
+              </div>
+              <button onclick="abrirModalReserva('Tóquio & Monte Fuji', 'R$ 6.950')" class="px-4 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg shadow-teal-500/20">
+                Reservar Pacote
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Estatísticas com animação AOS: zoom-in -->
+      <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div data-aos="zoom-in" data-aos-delay="100" class="glass-card p-6 rounded-2xl">
+          <p class="text-3xl sm:text-4xl font-black text-teal-400">+15.000</p>
+          <span class="text-xs text-slate-400 font-medium mt-1 block">Viajantes Atendidos</span>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="200" class="glass-card p-6 rounded-2xl">
+          <p class="text-3xl sm:text-4xl font-black text-cyan-400">48</p>
+          <span class="text-xs text-slate-400 font-medium mt-1 block">Países Catalogados</span>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="300" class="glass-card p-6 rounded-2xl">
+          <p class="text-3xl sm:text-4xl font-black text-purple-400">4.9 / 5.0</p>
+          <span class="text-xs text-slate-400 font-medium mt-1 block">Avaliação Média dos Clientes</span>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="400" class="glass-card p-6 rounded-2xl">
+          <p class="text-3xl sm:text-4xl font-black text-amber-400">100%</p>
+          <span class="text-xs text-slate-400 font-medium mt-1 block">Suporte 24h em Português</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SEÇÃO 4: DOCUMENTAÇÃO DAS BIBLIOTECAS (Perfeita para a Sala de Aula)
+       ========================================================================= -->
+  <section id="bibliotecas" class="py-20 relative border-t border-white/5 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+          <i class="fa-solid fa-code"></i>
+          <span>Programação Web I • Exigência do Projeto</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white brand-font">Como as 3 Bibliotecas Foram Utilizadas</h2>
+        <p class="text-slate-400 text-sm mt-2">
+          Visão técnica sobre a importação via CDN e o código JavaScript responsável por dar vida a cada componente.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Card Biblioteca 1: Swiper.js -->
+        <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-6 rounded-2xl border-t-4 border-t-teal-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black uppercase text-teal-400 tracking-wider">Biblioteca 1</span>
+              <span class="text-[11px] bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded font-mono">v11 CDN</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2">Swiper.js</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              Biblioteca moderna para criação de carrosséis e sliders touch responsivos com suporte a aceleração por hardware e múltiplos efeitos 3D.
+            </p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-white/10 text-[11px] font-mono text-teal-300 overflow-x-auto mb-4">
+              <span class="text-slate-500">// Inicialização em JS:</span><br>
+              const swiper = new Swiper('.destinos', {<br>
+              &nbsp;&nbsp;effect: 'coverflow',<br>
+              &nbsp;&nbsp;centeredSlides: true,<br>
+              &nbsp;&nbsp;autoplay: { delay: 3800 },<br>
+              &nbsp;&nbsp;pagination: { el: '.pagination' }<br>
+              });
+            </div>
+          </div>
+          <div class="text-xs text-slate-400 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span><strong>Onde foi usada:</strong> Carrossel de destinos</span>
+            <a href="#destinos" class="text-teal-400 hover:underline">Ver componente &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Card Biblioteca 2: Leaflet.js -->
+        <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-6 rounded-2xl border-t-4 border-t-cyan-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Biblioteca 2</span>
+              <span class="text-[11px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded font-mono">v1.9 CDN</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2">Leaflet.js</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              Principal biblioteca open-source para mapas interativos web. É leve (apenas 42KB de JS), compatível com dispositivos móveis e não necessita de chaves de API pagas.
+            </p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-white/10 text-[11px] font-mono text-cyan-300 overflow-x-auto mb-4">
+              <span class="text-slate-500">// Criação do mapa e marcador:</span><br>
+              const map = L.map('mapa').setView([20, 0], 2);<br>
+              L.tileLayer('https://...').addTo(map);<br>
+              L.marker([lat, lng])<br>
+              &nbsp;&nbsp;.addTo(map)<br>
+              &nbsp;&nbsp;.bindPopup('&lt;h4&gt;Destino&lt;/h4&gt;');
+            </div>
+          </div>
+          <div class="text-xs text-slate-400 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span><strong>Onde foi usada:</strong> Mapa mundial e popups</span>
+            <a href="#secao-mapa" class="text-cyan-400 hover:underline">Ver componente &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Card Biblioteca 3: AOS.js -->
+        <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-6 rounded-2xl border-t-4 border-t-purple-500 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black uppercase text-purple-400 tracking-wider">Biblioteca 3</span>
+              <span class="text-[11px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-mono">v2.3 CDN</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2">AOS (Animate On Scroll)</h3>
+            <p class="text-slate-300 text-xs leading-relaxed mb-4">
+              Permite aplicar animações CSS pré-construídas a qualquer elemento HTML disparadas no momento exato em que o usuário rola a tela até a posição do componente.
+            </p>
+            <div class="bg-slate-900/90 rounded-xl p-3 border border-white/10 text-[11px] font-mono text-purple-300 overflow-x-auto mb-4">
+              <span class="text-slate-500">// No HTML e JS:</span><br>
+              &lt;div data-aos="fade-up" data-aos-delay="100"&gt;<br>
+              <br>
+              AOS.init({<br>
+              &nbsp;&nbsp;duration: 850,<br>
+              &nbsp;&nbsp;once: true<br>
+              });
+            </div>
+          </div>
+          <div class="text-xs text-slate-400 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span><strong>Onde foi usada:</strong> Todos os cards e títulos</span>
+            <a href="#pacotes" class="text-purple-400 hover:underline">Ver componente &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       Modal de Reserva (Gatilho para canvas-confetti)
+       ========================================================================= -->
+  <div id="modal-reserva" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-teal-500/30 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <button onclick="fecharModalReserva()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-2xl bg-teal-500/20 border border-teal-500/30 text-teal-400 flex items-center justify-center text-xl mb-4">
+        <i class="fa-solid fa-plane-departure"></i>
+      </div>
+
+      <h3 class="text-2xl font-black text-white brand-font">Reservar Viagem</h3>
+      <p class="text-slate-400 text-xs mt-1">Preencha seus dados para receber o itinerário completo e confirmação de reserva.</p>
+
+      <div class="my-4 p-3 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] text-slate-400 font-bold uppercase block">Destino</span>
+          <span id="reserva-destino-nome" class="text-sm font-bold text-teal-400">Fernando de Noronha</span>
+        </div>
+        <div class="text-right">
+          <span class="text-[10px] text-slate-400 font-bold uppercase block">Valor</span>
+          <span id="reserva-destino-preco" class="text-sm font-black text-white">R$ 3.890</span>
+        </div>
+      </div>
+
+      <form id="form-reserva" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nome Completo</label>
+          <input type="text" required placeholder="Ex.: Lucas Mendes" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white text-xs focus:border-teal-500 focus:outline-none transition">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">E-mail para Confirmação</label>
+          <input type="email" required placeholder="lucas@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white text-xs focus:border-teal-500 focus:outline-none transition">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Data Estimada de Embarque</label>
+          <input type="date" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white text-xs focus:border-teal-500 focus:outline-none transition">
+        </div>
+
+        <button type="submit" class="w-full py-3 mt-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl transition shadow-lg shadow-teal-500/25 flex items-center justify-center gap-2">
+          <span>Confirmar e Finalizar Reserva</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast de Sucesso Flutuante -->
+  <div id="toast-sucesso" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 glass-card p-4 rounded-2xl border border-teal-500/40 shadow-2xl flex items-center gap-3">
+    <div class="w-9 h-9 rounded-xl bg-teal-500 text-slate-950 flex items-center justify-center font-bold">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div>
+      <h5 class="text-xs font-bold text-white">Reserva Registrada com Sucesso!</h5>
+      <p class="text-[11px] text-teal-300">Enviamos os detalhes para o seu e-mail cadastrado.</p>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Rodapé com Informações da Disciplina
+       ========================================================================= -->
+  <footer class="bg-slate-950 border-t border-white/10 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-teal-500 flex items-center justify-center text-slate-950 text-base font-black">
+            <i class="fa-solid fa-earth-americas"></i>
+          </div>
+          <div>
+            <span class="text-lg font-black text-white brand-font">ExploreMundo</span>
+            <p class="text-[11px] text-slate-400">Projeto Acadêmico • Programação Web I</p>
+          </div>
+        </div>
+
+        <!-- Links rápidos -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+          <a href="slides.html" target="_blank" class="hover:text-teal-400 font-bold flex items-center gap-1.5 text-teal-300">
+            <i class="fa-solid fa-display"></i>
+            <span>Abrir Apresentação de Slides</span>
+          </a>
+          <a href="#destinos" class="hover:text-teal-400">Swiper.js</a>
+          <a href="#secao-mapa" class="hover:text-cyan-400">Leaflet.js</a>
+          <a href="#pacotes" class="hover:text-purple-400">AOS.js</a>
+          <a href="#inicio" class="hover:text-white">Voltar ao topo &uarr;</a>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-white/5 text-center text-xs text-slate-500">
+        Desenvolvido para avaliação de integração de bibliotecas JavaScript em Programação Web I.
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       SCRIPTS: IMPORTAÇÃO DAS BIBLIOTECAS JS VIA CDN
+       ========================================================================= -->
+  
+  <!-- 1. Swiper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- 2. Leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- 3. AOS (Animate On Scroll) -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- 4. canvas-confetti (Bônus interativo) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Script Principal da Aplicação -->
+  <script src="js/main.js"></script>
+</body>
+</html>
